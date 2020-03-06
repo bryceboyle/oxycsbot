@@ -198,7 +198,7 @@ class OxyCSBot(ChatBot):
 
     def finish_confused(self):
         """Send a message and go to the default state."""
-        return "Sorry, I'm just a simple bot that can't understand much. You can ask me about office hours though! weeee"
+        return "EOGHEORUHIGURIGUGIRUH, I'm just a simple bot that can't understand much. You can ask me about office hours though! weeee"
 
     def finish_location(self):
         """Send a message and go to the default state."""
