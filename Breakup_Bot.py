@@ -8,6 +8,9 @@ class Breakup_Bot(ChatBot):
         'waiting',
         'advice',
         'listening'
+        'love'
+        'move_on'
+        
     ]
 #weeeeee
     TAGS = {
@@ -20,7 +23,12 @@ class Breakup_Bot(ChatBot):
         #advice
         'advice': 'advice',
         'talk': 'advice',
-        'help': 'listening',
+        'help': 'advice',
+
+        #problems
+        'still love':'love',
+        'still in love': 'love'
+        
         
 
     }
@@ -51,6 +59,8 @@ class Breakup_Bot(ChatBot):
     def on_enter_advice(self):
         """Send a message when entering the "advice" state."""
         return "what do you need help with"
+
+    """def respond_from_advice(self, message, tags):"""
 
 
     def finish_confused(self):
