@@ -1,5 +1,4 @@
 """A tag-based chatbot framework."""
-
 import re
 from collections import Counter
 
@@ -119,6 +118,7 @@ class ChatBot:
         """Start a chat with the chatbot."""
         try:
             message = input('> ')
+            message = message.replace('he ','they ').replace('him','them').replace('she','they').replace('her','them')
             while message.lower() not in ('exit', 'quit'):
                 print()
                 print(f'{self.__class__.__name__}: {self.respond(message)}')
