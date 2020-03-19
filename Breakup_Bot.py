@@ -76,7 +76,7 @@ class Breakup_Bot(ChatBot):
         super().__init__(default_state='waiting')
 
 
-    print( "Hi Im the breakup chatbox: made for your breakup problems!" +
+    print( "Hi Im the breakup chatbot: made for your breakup problems!" +
            "\nDo you want advice or just someone to listen?")
 
     def respond_from_waiting(self, message, tags):
@@ -130,12 +130,17 @@ class Breakup_Bot(ChatBot):
 
 
     def respond_from_upset(self,message,tags):
+        upsetList = ['Do you think you have a healthy way to express that feeling?',
+                     'Is it internal or do you think it’s from the situation?',
+                     'Does that work well for you? Do you feel like it’s healthy?']
+        return random.choice(upsetList)
+        '''
         if 'better' in tags:
             return self.go_to_state('healthy')
         elif 'worse' in tags:
             return self.go_to_state('unhealthy')
         else:
-            return self.finish('confused')
+            return self.finish('confused')'''
 
     #def on_enter_move_on(self)
     
