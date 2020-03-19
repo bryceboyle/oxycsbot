@@ -13,15 +13,15 @@ class Breakup_Bot(ChatBot):
         #'healthy'
         #'unhealthy'
         #'listening',
-        #'move_on',
+        'move_on',
         'upset'
         
     ]
 
     PROMPT = [
-        'how does the sitaution make you feel?',
-        'why is that a problem',
-        'what do you do when you feel that way',
+        'test how does the sitaution make you feel?',
+        'test why is that a problem',
+        'test what do you do when you feel that way',
     ]
 
     
@@ -76,7 +76,8 @@ class Breakup_Bot(ChatBot):
         super().__init__(default_state='waiting')
 
 
-    print( "Hi Im the breakup chatbox: made for your breakup problems!\nDo you want advice or just someone to listen?")
+    print( "Hi Im the breakup chatbox: made for your breakup problems!" +
+           "\nDo you want advice or just someone to listen?")
 
     def respond_from_waiting(self, message, tags):
         """ find out if they want advice or someone to listen to them """
@@ -121,7 +122,12 @@ class Breakup_Bot(ChatBot):
             return self.go_to_state('prompt')
 
     def on_enter_upset(self):
-        return 'what do you do when you feel that way? and how do you feel after?'
+        response = '\n'.join([
+            f'I can understand how you would feel that way', 'what do you do when that feeling arises?',
+            'and how do you feel after?',
+        ])
+        return response
+
 
     def respond_from_upset(self,message,tags):
         if 'better' in tags:
@@ -131,11 +137,12 @@ class Breakup_Bot(ChatBot):
         else:
             return self.finish('confused')
 
-
+    #def on_enter_move_on(self)
+    
         
     def finish_thanks(self):
         """Send a message and go to the default state."""
-        return "You're welcome!"
+        return "Im glad I could help, if you ever need someone to talk to I'm here."
     
     def finish_confused(self):
         """Send a message and go to the default state."""
