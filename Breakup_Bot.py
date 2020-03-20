@@ -24,6 +24,10 @@ class Breakup_Bot(ChatBot):
         'test what do you do when you feel that way',
     ]
 
+    upsetList = ['Do you think you have a healthy way to express that feeling?',
+                     'Is it internal or do you think it’s from the situation?',
+                     'Does that work well for you? Do you feel like it’s healthy?']
+
     
     TAGS = {
 
@@ -130,17 +134,18 @@ class Breakup_Bot(ChatBot):
 
 
     def respond_from_upset(self,message,tags):
-        upsetList = ['Do you think you have a healthy way to express that feeling?',
-                     'Is it internal or do you think it’s from the situation?',
-                     'Does that work well for you? Do you feel like it’s healthy?']
-        return random.choice(upsetList)
-        '''
+        
         if 'better' in tags:
             return self.go_to_state('healthy')
         elif 'worse' in tags:
             return self.go_to_state('unhealthy')
         else:
-            return self.finish('confused')'''
+            if len(self.upsetList) != 0:
+                item = random.choice(self.upsetList)
+                self.upsetList.remove(item)
+                return item
+            else:
+                return 'i am out of things to say oops change topics?'
 
     #def on_enter_move_on(self)
     
