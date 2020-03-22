@@ -69,22 +69,22 @@ class Breakup_Bot(ChatBot):
         'move on': 'love',
         'get over': 'love',
 
-        'frustrated': 'bothered',
-        'angry': 'bothered',
-        'annoying': 'bothered',
-        'annoyed': 'bothered',
-        'bothering me': 'bothered',
-        'upset': 'bothered',
-        'mad': 'bothered',
-        'driving me crazy': 'bothered',
-        'uncomfortable': 'bothered',
-        'anxious': 'bothered',
-        'sad': 'bothered',
-        'bad': 'bothered',
-        'not great': 'bothered',
-        'hurts': 'bothered',
-        'pisses me off': 'bothered',
-        'pissed': 'bothered',
+        'frustrated': 'bad',
+        'angry': 'bad',
+        'annoying': 'bad',
+        'annoyed': 'bad',
+        'bothering me': 'bad',
+        'upset': 'bad',
+        'mad': 'bad',
+        'driving me crazy': 'bad',
+        'uncomfortable': 'bad',
+        'anxious': 'bad',
+        'sad': 'bad',
+        'bad': 'bad',
+        'not great': 'bad',
+        'hurts': 'bad',
+        'pisses me off': 'bad',
+        'pissed': 'bad',
 
         'better': 'better',
         'I have healthy':'better',
@@ -168,7 +168,7 @@ class Breakup_Bot(ChatBot):
 
         if 'love' in tags:
             return self.go_to_state('move_on')
-        elif 'bothered' in tags:
+        elif 'bad' in tags:
             return self.go_to_state('upset')
         elif 'thanks' in tags:
             return self.finish('thanks')
@@ -185,7 +185,7 @@ class Breakup_Bot(ChatBot):
     def respond_from_generic(self,message,tags):
         if 'love' in tags:
             return self.go_to_state('move_on')
-        elif 'bothered' in tags:
+        elif 'bad' in tags:
             return self.go_to_state('upset')
         elif 'unsure' in tags:
             return self.go_to_state('doubt')
