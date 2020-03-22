@@ -62,6 +62,7 @@ class Breakup_Bot(ChatBot):
         'keep thinking about them': 'love',
         'i love': 'love',
         'move on': 'love',
+        'get over': 'love',
 
         'frustrated': 'bothered',
         'angry': 'bothered',
