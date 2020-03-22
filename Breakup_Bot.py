@@ -13,15 +13,16 @@ class Breakup_Bot(ChatBot):
         'unhealthy',
         'move_on',
         'upset',
-        #'doubt',
+        'doubt',
+        'questioning',
         #'insecure',
         'done',
         'm_advice'
     ]
 
     PROMPT = [
-        'how does the sitaution make you feel?',
-        'why is the sitaution a problem',
+        'how does the situation make you feel?',
+        'why is the situation a problem',
         'what do you do when you feel that way',
         ]
 
@@ -33,8 +34,8 @@ class Breakup_Bot(ChatBot):
         ]
 
     unhealthyList = [
-        'outside of this sitation what do you do when you feel this emotion',
-        'trying to distance yourself from what triggers you can prevent falling into unhealthy patterns, how can you try to remove yourself from the sitaution',
+        'outside of this situation what do you do when you feel this emotion',
+        'trying to distance yourself from what triggers you can prevent falling into unhealthy patterns, how can you try to remove yourself from the situation',
         
 
         ]
@@ -43,7 +44,13 @@ class Breakup_Bot(ChatBot):
                   'Keep your distance from them. I understand that this is difficult, but you need time to heal on your own.',
                   'Try not to seek them out, which is easier said than done if you see them frequently, but it will be good for you.',
                   'Find distractions in other people or things you love to help you through this.',
-                  'If you have tried many things already, it is also possible that no one can help you move on completely. You will just need more time, which is perfectly okay.'] 
+                  'If you have tried many things already, it is also possible that no one can help you move on completely. You will just need more time, which is perfectly okay.']
+
+    questionList = ['How long have you felt this way?',
+                    'Do you think you were with them for the right reasons?',
+                    'Do you think you were with them for who they are or who they had the potential to be?',
+                    'How do you feel about being unhappy for so long?',
+                    'Were the highs of the relationship worth the lows?']
     
     TAGS = {
 
@@ -79,7 +86,45 @@ class Breakup_Bot(ChatBot):
         'worse': 'worse',
         'the same': 'worse',
         'bad': 'worse',
-        'dont have healthy': 'worse',
+        'don\'t have healthy': 'worse',
+
+        'am happy': 'happy',
+        'was happy': 'happy',
+        'i feel happy': 'happy',
+        'i felt happy': 'happy',
+        'i feel good': 'happy',
+        'pretty good': 'happy',
+        'i felt good': 'happy',
+        'i feel okay': 'bad',
+        'i felt okay': 'bad',
+        'i felt ok': 'bad',
+        'i feel ok': 'bad',
+        'unhappy': 'bad',
+        'worried': 'bad',
+        'upset': 'bad',
+        'anxious': 'bad',
+        'anxiety': 'bad',
+        'stress': 'bad',
+        'stressed': 'bad',
+        'angry': 'bad',
+        'mad': 'bad',
+        'frustrated': 'bad',
+        'sad' : 'bad',
+        'lonely': 'bad',
+        'worthless': 'bad',
+        'felt bad': 'bad',
+        'feel bad': 'bad',
+        'feels bad': 'bad',
+
+        'regret': 'unsure',
+        'unsure': 'unsure',
+        'i don\'t know': 'unsure',
+        'not sure': 'unsure',
+        'confused': 'unsure',
+        'lost': 'unsure',
+        'mistake': 'unsure',
+        
+        
         
         #yes and no
         'im good':'no',
@@ -89,7 +134,7 @@ class Breakup_Bot(ChatBot):
         'guess not':'no',
         'no': 'no',
         'nah': 'no',
-        'i dont know': 'no',
+        'i don\'t know': 'no',
         
         'yes': 'yes',
         'yea': 'yes',
@@ -121,6 +166,8 @@ class Breakup_Bot(ChatBot):
             return self.go_to_state('upset')
         elif 'thanks' in tags:
             return self.finish('thanks')
+        elif 'unsure' in tags:
+            return self.go_to_state('doubt')
         else:
             return self.go_to_state('generic')
 
@@ -134,6 +181,8 @@ class Breakup_Bot(ChatBot):
             return self.go_to_state('move_on')
         elif 'bothered' in tags:
             return self.go_to_state('upset')
+        elif 'unsure' in tags:
+            return self.go_to_state('doubt')
         else:
             return self.go_to_state('generic')
 
@@ -178,7 +227,7 @@ class Breakup_Bot(ChatBot):
         return self.go_to_state('done')
         
     def on_enter_unhealthy(self):
-        return 'do you think you have or can think of good ways to cope' 
+        return 'do you think you have or can think of good ways to cope when you are struggling with this situation?' 
 
     def respond_from_unhealthy(self,messages,tags):
         if 'yes' in tags:
@@ -199,6 +248,37 @@ class Breakup_Bot(ChatBot):
             else:
                 return self.go_to_state('done')
 
+    def on_enter_doubt(self):
+        return 'Do you feel happy most of the time or unhappy most of the time when you are around them?'
+
+    def respond_from_doubt(self,messages,tags):
+        if 'happy' in tags:
+            return self.go_to_state('move_on')
+        
+        if 'bad' in tags:
+            return self.go_to_state('questioning')
+
+        else:
+            return self.finish('confused')
+
+    def on_enter_questioning(self):
+        return 'Why are you putting yourself in a situation where you are often worried or unhappy?'
+
+    def respond_from_questioning(self,messages,tags):
+        if len(self.questionList) > 0:
+            item = random.choice(self.questionList)
+            self.questionList.remove(item)
+            if len(self.questionList) == 3:
+                return '\n'.join(['I can understand that. ', item])
+            if len(self.questionList) == 1:
+                return '\n'.join(['I see, that must be difficult. ', item])
+            else:
+                return item
+        else:
+            print('I think it\'s important to prioritize your happiness. It might be hard to know what will do that,but if you are trying things and are still not satisfied, maybe it\’s time to let the relationship go.')
+            print('\n')
+            return self.go_to_state('unhealthy')
+        
 
     def on_enter_move_on(self):
         return 'Do you feel like you’ve had closure in this relationship?'
@@ -226,7 +306,7 @@ class Breakup_Bot(ChatBot):
                 item = random.choice(self.adviceList)
                 self.adviceList.remove(item)
                 if len(self.adviceList) > 0:
-                    return '\n'.join([item, ' Do you want more advice?'])
+                    return '\n'.join([item, ' Do you want more advice?']) #maybe randomize varied versions of this if theres time
                 else:
                     return item
             else:
@@ -236,10 +316,6 @@ class Breakup_Bot(ChatBot):
                 return self.finish('confused')
             else:
                 return self.go_to_state('done')
-            
-        
-                            
-        
         
        
     def on_enter_done(self):
