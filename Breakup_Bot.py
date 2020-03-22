@@ -5,6 +5,11 @@ import random
 class Breakup_Bot(ChatBot):
     """A chatbot that offers help with a breakup"""
 
+    upsetConf = 0
+    moveOnConf = 0
+    doubtConf = 0
+    adviceConf = 0
+
     
     STATES = [
         'waiting',
@@ -207,7 +212,13 @@ class Breakup_Bot(ChatBot):
             elif 'worse' in tags:
                 return self.go_to_state('unhealthy')
             else:
-                return self.finish('confused')
+                if self.upsetConf < 1:
+                    self.upsetConf += 1
+                    print('Im sorry, Im not sure I understand. Can you try explaining again?')
+                    print('\n')
+                    return self.go_to_state('upset')
+                else:
+                    return self.finish('confused')
             
 
     def on_enter_healthy(self):
@@ -260,7 +271,13 @@ class Breakup_Bot(ChatBot):
             return self.go_to_state('questioning')
 
         else:
-            return self.finish('confused')
+            if self.doubtConf < 1:
+                self.doubtConf += 1
+                print('Im a little lost, sorry. Could you rephrase that?')
+                print('\n')
+                return self.go_to_state('doubt')
+            else:
+                return self.finish('confused')
 
     def on_enter_questioning(self):
         return 'Why are you putting yourself in a situation where you are often worried or unhappy?'
@@ -293,7 +310,14 @@ class Breakup_Bot(ChatBot):
             print('Its important not to judge yourself too harshly for the things you feel or do. I think working towards getting over them would be good for you.')
             return self.go_to_state('m_advice')
         else:
-            return self.finish('confused')
+            if self.moveOnConf < 1:
+                    self.moveOnConf += 1
+                    print('What exactly do you mean by that? I am a little confused.')
+                    print('\n')
+                    return self.go_to_state('move_on')
+            else:
+                return self.finish('confused')
+            
 
     def on_enter_m_advice(self):
         return 'Would you like some advice that could help you move on?'
@@ -314,7 +338,13 @@ class Breakup_Bot(ChatBot):
                 return self.go_to_state('done')
         else:
             if len(self.adviceList) > 0:
-                return self.finish('confused')
+                if self.adviceConf < 1:
+                    self.adviceConf += 1
+                    print('Im not sure what you are trying to say. Could you explain it a little differently?')
+                    print('\n')
+                    return self.go_to_state('m_advice')
+                else:
+                    return self.finish('confused')
             else:
                 return self.go_to_state('done')
         
