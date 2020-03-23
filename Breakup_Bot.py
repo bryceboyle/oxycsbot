@@ -31,6 +31,9 @@ class Breakup_Bot(ChatBot):
         'how does the situation make you feel?',
         'why is the situation a problem?',
         'what do you do when you feel that way?',
+        'can you tell me more aout it?',
+        'can you elaborate?',
+        'whats your thought process when this happens?'
         ]
 
 
@@ -102,6 +105,10 @@ class Breakup_Bot(ChatBot):
         'i felt okay': 'bad',
         'i felt ok': 'bad',
         'i feel ok': 'bad',
+        'cry' : 'bad',
+        'crying' : 'bad',
+        'scream': 'bad',
+        'yell' : 'bad',
 
         'better': 'better',
         'I have healthy':'better',
@@ -154,6 +161,8 @@ class Breakup_Bot(ChatBot):
         'feel so ugly' : 'insecure',
         'cant believe i' : 'insecure',
         'can not believe i' : 'insecure',
+        'hate myself' : 'insecure',
+        
         
         
         
