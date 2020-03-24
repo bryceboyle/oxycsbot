@@ -75,6 +75,7 @@ class Breakup_Bot(ChatBot):
         'i love': 'love',
         'move on': 'love',
         'get over': 'love',
+        'not over': 'love',
 
         'frustrated': 'bad',
         'angry': 'bad',
