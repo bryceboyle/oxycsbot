@@ -33,7 +33,7 @@ class Breakup_Bot(ChatBot):
         'how does the situation make you feel?',
         'why is the situation a problem?',
         'what do you do when you feel that way?',
-        'can you tell me more aout it?',
+        'can you tell me more about it?',
         'can you elaborate?',
         'whats your thought process when this happens?'
         ]
@@ -237,8 +237,8 @@ class Breakup_Bot(ChatBot):
 
     def on_enter_upset(self):
         response = '\n'.join([
-            f'I can understand how you would feel that way',
-            'what do you do when that feeling arises?',
+            f'I can understand how you would feel that way.',
+            'What do you do when that feeling arises,',
             'and how do you feel after?',
         ])
         return response
@@ -266,27 +266,27 @@ class Breakup_Bot(ChatBot):
     def on_enter_healthy(self):
         response = '\n'.join([
             f'What are ways you can utilize your coping mechanisms and distance yourself from what bothers you?',
-            'Its important to know that sometimes you cant control what others do and instead you should focus on what you can control',
+            'Its important to know that sometimes you cant control what others do and instead you should focus on what you can control.',
         ])
         return response
 
     def respond_from_healthy(self,message,tags):
         response = '\n'.join([
-            f'Figuring out ways to overcome stressful emotions and relationships isnt easy and cant be solved instantaneously',
-            'but it is important to spend the time thinking of how to find these outlets and distance for yourself',
-            'make sure to give yourself that time.'
+            f'Figuring out ways to overcome stressful emotions and relationships isnt easy and cant be solved instantaneously,',
+            'but it is important to spend the time thinking of how to find these outlets and distance for yourself.',
+            'Make sure to give yourself that time.'
         ])
         return '\n'.join([response,  '\n', self.go_to_state('done')])
         
     def on_enter_unhealthy(self):
-        return 'do you think you have or can think of good ways to cope when you are struggling with this situation?' 
+        return 'Do you think you have or can think of good ways to cope when you are struggling with this situation?' 
 
     def respond_from_unhealthy(self,messages,tags):
         if 'yes' in tags:
             response = '\n'.join([
-            f'Figuring out ways to overcome stressful emotions and relationships isnt easy and cant be solved instantaneously',
-            'but it is important to spend the time thinking of how to find healthy outlets and distance for yourself',
-            'make sure to give yourself that time and make sure that you are safe. that should be your priority.'
+            f'Figuring out ways to overcome stressful emotions and relationships isnt easy and cant be solved instantaneously,',
+            'but it is important to spend the time thinking of how to find healthy outlets and distance for yourself.',
+            'Make sure to give yourself that time and make sure that you are safe. that should be your priority.'
             ])
             return '\n'.join([response, '\n', self.go_to_state('done')])
         
@@ -407,7 +407,7 @@ class Breakup_Bot(ChatBot):
         
        
     def on_enter_done(self):
-        return 'is there anything else I can help you with'
+        return 'Is there anything else I can help you with?'
 
     def respond_from_done(self,messages,tags):
         if 'yes' in tags:
@@ -437,7 +437,7 @@ class Breakup_Bot(ChatBot):
     
     def finish_confused(self):
         """Send a message and go to the default state."""
-        return "Sorry, I'm just a simple bot that can't understand much. can you try to explain again?"
+        return "Sorry, I'm just a simple bot that can't understand much. Can you try to explain again?"
 
 
 if __name__ == '__main__':
