@@ -178,7 +178,7 @@ class Breakup_Bot(ChatBot):
         'guess not':'no',
         'no': 'no',
         'nah': 'no',
-        'i don\'t know': 'no',
+        'i dont know': 'no',
         
         'yes': 'yes',
         'yea': 'yes',
@@ -199,13 +199,11 @@ class Breakup_Bot(ChatBot):
         super().__init__(default_state='waiting')
 
 
-    
-
     def respond_from_waiting(self, message, tags):
         self.waitCount += 1
         if self.waitCount == 1:
-            print( 'Hi Im the breakup chatbot: made for your breakup problems!')
-            return self.finish('continue')
+            
+            return '\n'.join(['Hi Im the breakup chatbot: made for your breakup problems!', self.finish('continue')])
 
         if 'love' in tags:
             return self.go_to_state('move_on')
@@ -252,16 +250,14 @@ class Breakup_Bot(ChatBot):
             self.upsetList.remove(item)
             return item
         else:
-            if 'better' in tags:
+            if 'better' or 'happy' in tags:
                 return self.go_to_state('healthy')
-            elif 'worse' in tags:
+            elif 'worse' or 'bad' in tags:
                 return self.go_to_state('unhealthy')
             else:
                 if self.upsetConf < 1:
                     self.upsetConf += 1
-                    print('Im sorry, Im not sure I understand. Can you try explaining again?')
-                    print('\n')
-                    return self.go_to_state('upset')
+                    return '\n'.join(['Im sorry, Im not sure I understand. Can you try explaining again?', self.go_to_state('upset')])
                 else:
                     self.upsetConf = 0
                     return self.finish('confused')
@@ -269,8 +265,8 @@ class Breakup_Bot(ChatBot):
 
     def on_enter_healthy(self):
         response = '\n'.join([
-            f'how are ways you can utilize your coping mechanisms and distance yourself from what bothers you',
-            'its important to know that sometimes you cant control what others do and instead you should focus on what you can control',
+            f'What are ways you can utilize your coping mechanisms and distance yourself from what bothers you?',
+            'Its important to know that sometimes you cant control what others do and instead you should focus on what you can control',
         ])
         return response
 
@@ -278,11 +274,9 @@ class Breakup_Bot(ChatBot):
         response = '\n'.join([
             f'Figuring out ways to overcome stressful emotions and relationships isnt easy and cant be solved instantaneously',
             'but it is important to spend the time thinking of how to find these outlets and distance for yourself',
-            'make sure to give yourself that time'
+            'make sure to give yourself that time.'
         ])
-
-        print (response)
-        return self.go_to_state('done')
+        return '\n'.join([response,  '\n', self.go_to_state('done')])
         
     def on_enter_unhealthy(self):
         return 'do you think you have or can think of good ways to cope when you are struggling with this situation?' 
@@ -294,8 +288,7 @@ class Breakup_Bot(ChatBot):
             'but it is important to spend the time thinking of how to find healthy outlets and distance for yourself',
             'make sure to give yourself that time and make sure that you are safe. that should be your priority.'
             ])
-            print (response)
-            return self.go-to_state('done')
+            return '\n'.join([response, '\n', self.go_to_state('done')])
         
         else:
             if len(self.unhealthyList) != 0:
@@ -310,26 +303,22 @@ class Breakup_Bot(ChatBot):
         return 'Why do you think that?'
 
     def respond_from_insecure(self,messages,tags):
-        print('That does sound awful. But the future is filled with so much opportunity. I know you’re dealing with this now. But its not forever.')
-        return self.go_to_state('self_care')
+        return '\n'.join(['That does sound awful. But the future is filled with so much opportunity. I know you’re dealing with this now. But its not forever.',  '\n', self.go_to_state('self_care')])
 
     def on_enter_self_care(self):
         return 'Would you like some ideas that could help you work on appreciating yourself?'
 
     def respond_from_self_care(self,messages,tags):
         if 'no' in tags:
-            print('Im sorry you are dealing with this.')
-            return self.go_to_state('unhealthy')
+            return '\n'.join(['Im sorry you are dealing with this.', '\n', self.go_to_state('unhealthy')])
+            
         if 'yes' in tags:
-            print('Maybe instead of focusing on a relationship, you could use this as an opportunity to learn how to love yourself. That will make you more happy long term.')
-            print('One thing that helps me is to try to list one thing I like about myself everyday. Even if its little things.')
-            return self.go_to_state('done')
+            return '\n'.join(['Maybe instead of focusing on a relationship, you could use this as an opportunity to learn how to love yourself. That will make you more happy long term.',
+                              'One thing that helps me is to try to list one thing I like about myself everyday. Even if its little things.', '\n',self.go_to_state('done')])
         else:
             if self.careConf < 1:
                 self.careConf += 1
-                print('Could you repeat that? I didnt quite grasp what you were saying.')
-                print('\n')
-                return self.go_to_state('self_care')
+                return '\n'.join(['Could you repeat that? I didnt quite grasp what you were saying.', self.go_to_state('self_care') ])
             else:
                 self.careConf = 0
                 return self.finish('confused')
@@ -348,9 +337,7 @@ class Breakup_Bot(ChatBot):
         else:
             if self.doubtConf < 1:
                 self.doubtConf += 1
-                print('Im a little lost, sorry. Could you rephrase that?')
-                print('\n')
-                return self.go_to_state('doubt')
+                return '\n'.join(['Im a little lost, sorry. Could you rephrase that?', self.go_to_state('doubt')])
             else:
                 self.doubtConf = 0
                 return self.finish('confused')
@@ -369,9 +356,7 @@ class Breakup_Bot(ChatBot):
             else:
                 return item
         else:
-            print('I think it\'s important to prioritize your happiness. It might be hard to know what will do that,but if you are trying things and are still not satisfied, maybe it\’s time to let the relationship go.')
-            print('\n')
-            return self.go_to_state('unhealthy')
+            return '\n'.join(['I think its important to prioritize your happiness. It might be hard to know what will do that, but if you are trying things and are still not satisfied, maybe its time to let the relationship go.', '\n', self.go_to_state('unhealthy')])
         
 
     def on_enter_move_on(self):
@@ -379,18 +364,14 @@ class Breakup_Bot(ChatBot):
 
     def respond_from_move_on(self,messages,tags):
         if 'yes' in tags:
-            print('\n'.join([random.choice(['You should to take more time for yourself to work through it', 'We all move on at our own pace, some of us may take a little longer',
-                                  'This relationship was clearly an important part of your life. It is natural to need time to process']), ' How do you feel when you think about them?']))
-            return self.go_to_state('upset')
+            return '\n'.join([random.choice(['You should to take more time for yourself to work through it', 'We all move on at our own pace, some of us may take a little longer',
+                                  'This relationship was clearly an important part of your life. It is natural to need time to process']), ' How do you feel when you think about them?', '\n', self.go_to_state('upset')])
         if 'no' in tags:
-            print('Its important not to judge yourself too harshly for the things you feel or do. I think working towards getting over them would be good for you.')
-            return self.go_to_state('m_advice')
+            return '\n'.join(['Its important not to judge yourself too harshly for the things you feel or do. I think working towards getting over them would be good for you.', '\n', self.go_to_state('m_advice')])
         else:
             if self.moveOnConf < 1:
                     self.moveOnConf += 1
-                    print('What exactly do you mean by that? I am a little confused.')
-                    print('\n')
-                    return self.go_to_state('move_on')
+                    return '\n'.join(['What exactly do you mean by that? I am a little confused.', self.go_to_state('move_on')])
             else:
                 self.moveOnConf = 0
                 return self.finish('confused')
@@ -417,9 +398,7 @@ class Breakup_Bot(ChatBot):
             if len(self.adviceList) > 0:
                 if self.adviceConf < 1:
                     self.adviceConf += 1
-                    print('Im not sure what you are trying to say. Could you explain it a little differently?')
-                    print('\n')
-                    return self.go_to_state('m_advice')
+                    return '\n'.join(['Im not sure what you are trying to say. Could you explain it a little differently?', self.go_to_state('m_advice')])
                 else:
                     self.adviceConf = 0
                     return self.finish('confused')
