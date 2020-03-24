@@ -11,6 +11,8 @@ class Breakup_Bot(ChatBot):
     adviceConf = 0
     careConf = 0
 
+    waitCount = 0
+
     
     STATES = [
         'waiting',
@@ -197,10 +199,13 @@ class Breakup_Bot(ChatBot):
         super().__init__(default_state='waiting')
 
 
-    print( "Hi Im the breakup chatbot: made for your breakup problems!" +
-           "\nWhat can I help you with?")
+    
 
     def respond_from_waiting(self, message, tags):
+        waitCount += 1
+        if waitCount = 1:
+            print( 'Hi Im the breakup chatbot: made for your breakup problems!')
+            return self.finish(continue)
 
         if 'love' in tags:
             return self.go_to_state('move_on')
