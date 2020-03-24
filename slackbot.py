@@ -8,10 +8,9 @@ import certifi
 from flask import Flask
 from slack import WebClient
 from slackeventsapi import SlackEventAdapter
-#work please
 
-from oxycsbot import OxyCSBot # FIXME replace with your chatbot class
-#grrrrr change please
+
+from Breakup_Bot import Breakup_Bot 
 
 # initialize the Flask app
 app = Flask(__name__)
@@ -44,7 +43,7 @@ def message(payload):
 
     key = (user_id, channel_id)
     if key not in global_state['partners']:
-        global_state['partners'][key] = OxyCSBot() # FIXME replace with your chatbot class
+        global_state['partners'][key] = Breakup_Bot() 
     chatbot = global_state['partners'][key]
     response = chatbot.respond(text)
 
