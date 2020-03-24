@@ -202,10 +202,10 @@ class Breakup_Bot(ChatBot):
     
 
     def respond_from_waiting(self, message, tags):
-        waitCount += 1
-        if waitCount = 1:
+        self.waitCount += 1
+        if self.waitCount == 1:
             print( 'Hi Im the breakup chatbot: made for your breakup problems!')
-            return self.finish(continue)
+            return self.finish('continue')
 
         if 'love' in tags:
             return self.go_to_state('move_on')
@@ -437,7 +437,7 @@ class Breakup_Bot(ChatBot):
             return self.finish('thanks')
 
     def finish_continue(self):
-        return 'whats troubling you?'
+        return 'Whats troubling you?'
         
     def finish_thanks(self):
         """Send a message and go to the default state."""
