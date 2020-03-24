@@ -183,7 +183,7 @@ class Breakup_Bot(ChatBot):
         #yes and no
         
         'im good':'no',
-        "i'm good":'no'
+        "i'm good":'no',
         'nope': 'no',
         'i dont think': 'no',
         "i don't think": 'no',
