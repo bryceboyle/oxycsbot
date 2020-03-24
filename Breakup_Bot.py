@@ -437,10 +437,23 @@ class Breakup_Bot(ChatBot):
             return self.finish('thanks')
 
     def finish_continue(self):
+        upsetConf = 0
+        moveOnConf = 0
+        doubtConf = 0
+        adviceConf = 0
+        careConf = 0
         return 'Whats troubling you?'
         
     def finish_thanks(self):
         """Send a message and go to the default state."""
+        waitCount = 0
+        
+        upsetConf = 0
+        moveOnConf = 0
+        doubtConf = 0
+        adviceConf = 0
+        careConf = 0
+        
         return "Im glad I could help, if you ever need someone to talk to I'm here."
     
     def finish_confused(self):
